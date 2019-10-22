@@ -6,6 +6,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.broadcast.Broadcast;
 import scala.Tuple2;
+import scala.Tuple3;
 
 import java.util.Map;
 
@@ -25,8 +26,12 @@ public class SparkApp {
                     Boolean isLate = delayString.isEmpty();
                     Long delay = (isLate) ? 0 : Long.parseLong(delayString);
                     return new Tuple2<>(new Tuple2<>(Integer.parseInt(originalAirportID),
-                            Integer.parseInt(destinationAirportID)), delay);
-                }).mapToPair()
+                            Integer.parseInt(destinationAirportID)),
+                            new Tuple3<>(delay, (isLate || delay != 0) ? 1 : 0, 1));
+                }).reduceByKey((a, b) -> new Tuple3<>(Math.max(a._1(), b._1()),
+                        a._2() + b._2(),
+                        a._3() + b._3())).mapToPair(s -> new Tuple2<>(s._1(),
+                        new Tuple2<>(s._2()._1(), (s._2()._2()) / s._2()._3()))).mapToPair()
 
         JavaRDD<String> airportsCSV = sc.textFile("L_AIRPORT_ID.csv");
         JavaPairRDD<Integer, String> airportsData = airportsCSV.mapToPair(s -> {
