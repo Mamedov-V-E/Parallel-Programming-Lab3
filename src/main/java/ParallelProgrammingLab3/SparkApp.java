@@ -19,6 +19,6 @@ public class SparkApp {
 
     private static Tuple2<Tuple2<String, String>, Tuple2<Long, Byte>> GetNewFlightKeyValuePair(String line) {
         String[] parameters = ParseUtils.ParseFlightsLogLine(line);
-        
+        return new Tuple2<>(new Tuple2<>(parameters))
     }
 }
