@@ -32,7 +32,7 @@ public class SparkApp {
                         a._2() + b._2(),
                         a._3() + b._3()))
                 .mapToPair(s -> new Tuple2<>(s._1(),
-                        new Tuple3<>(s._2()._1(), new Double((double)s._2()._2() / s._2()._3() * 100), airport)));
+                        new Tuple2<>(s._2()._1(), new Double((double)s._2()._2() / s._2()._3() * 100))));
 
         JavaRDD<String> airportsCSV = sc.textFile("L_AIRPORT_ID.csv");
         JavaPairRDD<Integer, String> airportsData = airportsCSV.mapToPair(s -> {
@@ -43,7 +43,7 @@ public class SparkApp {
         Map<Integer, String> stringAirportDataMap = airportsData.collectAsMap();
         final Broadcast<Map<Integer, String>> airportsBroadcasted = sc.broadcast(stringAirportDataMap);
 
-        JavaPairRDD<Tuple2<String, String>, Tup>
+        JavaPairRDD<Tuple2<String,String>, Tuple3<Long, Double, String>>
     }
 
 //    private static Tuple2<Tuple2<Integer, Integer>, Long> GetNewFlightKeyValuePair (String line) {
