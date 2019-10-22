@@ -16,7 +16,7 @@ public class SparkApp {
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> flightsCSV = sc.textFile("664600583_T_ONTIME_sample.csv");
-        JavaPairRDD<Tuple2<Integer, Integer>, Long> flightsData = flightsCSV
+        JavaPairRDD<Tuple2<Integer, Integer>, Tuple2<Long, Double>> flightsData = flightsCSV
                 .mapToPair(s -> {
                     String[] parameters = ParseUtils.ParseFlightsLogLine(s);
                     String originalAirportID = parameters[ParseUtils.FLIGHTS_ORIGIN_AIRPORT_ID_PARAM_NUMBER];
@@ -31,7 +31,7 @@ public class SparkApp {
                 }).reduceByKey((a, b) -> new Tuple3<>(Math.max(a._1(), b._1()),
                         a._2() + b._2(),
                         a._3() + b._3())).mapToPair(s -> new Tuple2<>(s._1(),
-                        new Tuple2<>(s._2()._1(), (s._2()._2()) / s._2()._3()))).mapToPair()
+                        new Tuple2<>(s._2()._1(), new Double((double)s._2()._2() / s._2()._3() * 100))));
 
         JavaRDD<String> airportsCSV = sc.textFile("L_AIRPORT_ID.csv");
         JavaPairRDD<Integer, String> airportsData = airportsCSV.mapToPair(s -> {
@@ -42,6 +42,7 @@ public class SparkApp {
         Map<Integer, String> stringAirportDataMap = airportsData.collectAsMap();
         final Broadcast<Map<Integer, String>> airportsBroadcasted = sc.broadcast(stringAirportDataMap);
 
+        JavaPairRDD<Tuple2<String, String>, Tup>
     }
 
 //    private static Tuple2<Tuple2<Integer, Integer>, Long> GetNewFlightKeyValuePair (String line) {
