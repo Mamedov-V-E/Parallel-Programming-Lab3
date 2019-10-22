@@ -20,8 +20,8 @@ public class SparkApp {
     private static Tuple2<Tuple2<String, String>, Tuple2<Long, Byte>> GetNewFlightKeyValuePair(String line) {
         String[] parameters = ParseUtils.ParseFlightsLogLine(line);
         String originalAirportID = parameters[11];
-        String destinationAirportID = parameters[13];
+        String destinationAirportID = parameters[14];
 
-        return new Tuple2<>(new Tuple2<>(parameters[11], parameters[13]), new Tuple2<>())
+        return new Tuple2<>(new Tuple2<>(parameters[11], parameters[14]), new Tuple2<>())
     }
 }
