@@ -18,13 +18,13 @@ public class SparkApp {
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> flightsCSV = sc.textFile("664600583_T_ONTIME_sample.csv");
         JavaPairRDD<Tuple2<Integer, Integer>, Long> flightsData = flightsCSV
-                .mapToPair(SparkApp::GetNewFlightKeyValuePair);
+                .mapToPair(SparkApp::GetNewFlightKeyValuePair).reduceByKey();
 
         JavaRDD<String> airportsCSV = sc.textFile("L_AIRPORT_ID.csv");
         JavaPairRDD<Integer, String> airportsData = airportsCSV.mapToPair(SparkApp::GetNewAirportsKeyValuePair);
         Map<Integer, String> stringAirportDataMap = airportsData.collectAsMap();
         final Broadcast<Map<Integer, String>> airportsBroadcasted = sc.broadcast(stringAirportDataMap);
-        
+
     }
 
     private static Tuple2<Tuple2<Integer, Integer>, Long> GetNewFlightKeyValuePair (String line) {
