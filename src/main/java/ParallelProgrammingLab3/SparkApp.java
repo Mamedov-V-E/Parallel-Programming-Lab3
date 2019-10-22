@@ -26,7 +26,7 @@ public class SparkApp {
                     Long delay = (isLate) ? 0 : Long.parseLong(delayString);
                     return new Tuple2<>(new Tuple2<>(Integer.parseInt(originalAirportID),
                             Integer.parseInt(destinationAirportID)), delay);
-                }).reduce()
+                }).mapToPair()
 
         JavaRDD<String> airportsCSV = sc.textFile("L_AIRPORT_ID.csv");
         JavaPairRDD<Integer, String> airportsData = airportsCSV.mapToPair(s -> {
