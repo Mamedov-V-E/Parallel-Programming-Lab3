@@ -28,7 +28,7 @@ public class SparkApp {
     }
 
     private static Tuple2<Tuple2<Integer, Integer>, Long> GetNewFlightKeyValuePair (String line) {
-        a
+        airportsBroadcasted.value
         String[] parameters = ParseUtils.ParseFlightsLogLine(line);
         String originalAirportID = parameters[ParseUtils.FLIGHTS_LOG_ORIGIN_AIRPORT_ID_PARAM_NUMBER];
         String destinationAirportID = parameters[ParseUtils.FLIGHTS_LOG_DEST_AIRPORT_ID_PARAM_NUMBER];
