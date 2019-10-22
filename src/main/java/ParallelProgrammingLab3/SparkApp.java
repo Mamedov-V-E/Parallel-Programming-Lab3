@@ -16,6 +16,7 @@ public class SparkApp {
         JavaPairRDD<Tuple2<String, String>, Long> flightsData = flights
                 .mapToPair(SparkApp::GetNewFlightKeyValuePair);
 
+        stringAirportDataMap = 
         final Broadcast<Map<String, AirportData>> airportsBroadcasted = sc.broadcast(stringAirportDataMap);
     }
 
