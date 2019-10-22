@@ -43,7 +43,7 @@ public class SparkApp {
         Map<Integer, String> stringAirportDataMap = airportsData.collectAsMap();
         final Broadcast<Map<Integer, String>> airportsBroadcasted = sc.broadcast(stringAirportDataMap);
 
-        JavaPairRDD<Tuple2<String,String>, Tuple3<Long, Double, String>>
+        JavaPairRDD<Tuple2<Tuple2<Integer, String>, Tuple2<Integer, String>>, Tuple3<Long, Double, String>>
     }
 
 //    private static Tuple2<Tuple2<Integer, Integer>, Long> GetNewFlightKeyValuePair (String line) {
