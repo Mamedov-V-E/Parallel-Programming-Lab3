@@ -13,6 +13,12 @@ public class SparkApp {
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> flights = sc.textFile("664600583_T_ONTIME_sample.csv");
-        JavaPairRDD<Tuple2<String, String>, Tuple2 <Long, Byte>> flightsData = flights.;
+        JavaPairRDD<Tuple2<String, String>, Tuple2 <Long, Byte>> flightsData = flights
+                .mapToPair(s -> new Tuple2<>(new Tuple2<>()));
+    }
+
+    private static Tuple2<Tuple2<String, String>, Tuple2<Long, Byte>> GetNewFlightKeyValuePair(String line) {
+        String[] parameters = ParseUtils.ParseFlightsLogLine(line);
+        
     }
 }
