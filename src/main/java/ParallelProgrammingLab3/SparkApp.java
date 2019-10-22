@@ -49,7 +49,7 @@ public class SparkApp {
                         new Tuple2<>(s._1()._2(), airportsBroadcasted.value().get(s._1()._2()))),
                         s._2()));
 
-        result.saveAsTextFile();
+        result.saveAsTextFile("result");
     }
 
 //    private static Tuple2<Tuple2<Integer, Integer>, Long> GetNewFlightKeyValuePair (String line) {
