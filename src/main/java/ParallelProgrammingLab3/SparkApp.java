@@ -32,7 +32,7 @@ public class SparkApp {
                         a._2() + b._2(),
                         a._3() + b._3()))
                 .mapToPair(s -> new Tuple2<>(s._1(),
-                        new Tuple3<>(s._2()._1(), new Double((double)s._2()._2() / s._2()._3() * 100), )));
+                        new Tuple3<>(s._2()._1(), new Double((double)s._2()._2() / s._2()._3() * 100), airport)));
 
         JavaRDD<String> airportsCSV = sc.textFile("L_AIRPORT_ID.csv");
         JavaPairRDD<Integer, String> airportsData = airportsCSV.mapToPair(s -> {
