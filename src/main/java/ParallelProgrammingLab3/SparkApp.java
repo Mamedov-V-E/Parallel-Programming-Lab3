@@ -13,15 +13,16 @@ public class SparkApp {
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> flights = sc.textFile("664600583_T_ONTIME_sample.csv");
-        JavaPairRDD<Tuple2<String, String>, Tuple2 <Long, Byte>> flightsData = flights
-                .mapToPair(s -> new Tuple2<>(new Tuple2<>()));
+        JavaPairRDD<Tuple2<String, String>, Long> flightsData = flights
+                .mapToPair(SparkApp::GetNewFlightKeyValuePair);
     }
 
-    private static Tuple2<Tuple2<String, String>, Tuple2<Long, Byte>> GetNewFlightKeyValuePair(String line) {
+    private static Tuple2<Tuple2<String, String>, Long> GetNewFlightKeyValuePair(String line) {
         String[] parameters = ParseUtils.ParseFlightsLogLine(line);
-        String originalAirportID = parameters[11];
-        String destinationAirportID = parameters[14];
-
-        return new Tuple2<>(new Tuple2<>(parameters[11], parameters[14]), new Tuple2<>())
+        String originalAirportID = parameters[ParseUtils.FLIGHTS_LOG_ORIGIN_AIRPORT_ID_PARAM_NUMBER];
+        String destinationAirportID = parameters[ParseUtils.FLIGHTS_LOG_DEST_AIRPORT_ID_PARAM_NUMBER];
+        String delayString = parameters[ParseUtils.FLIGHTS_LOG_DELAY_PARAM_NUMBER];
+        Long delay = (delayString.isEmpty()) ? 0 : Long.parseLong(delayString);
+        return new Tuple2<>(new Tuple2<>(originalAirportID, destinationAirportID), delay);
     }
 }
