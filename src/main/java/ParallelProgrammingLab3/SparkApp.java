@@ -30,8 +30,9 @@ public class SparkApp {
                             new Tuple3<>(delay, (isLate || delay != 0) ? 1 : 0, 1));
                 }).reduceByKey((a, b) -> new Tuple3<>(Math.max(a._1(), b._1()),
                         a._2() + b._2(),
-                        a._3() + b._3())).mapToPair(s -> new Tuple2<>(s._1(),
-                        new Tuple2<>(s._2()._1(), new Double((double)s._2()._2() / s._2()._3() * 100))));
+                        a._3() + b._3()))
+                .mapToPair(s -> new Tuple2<>(s._1(),
+                        new Tuple3<>(s._2()._1(), new Double((double)s._2()._2() / s._2()._3() * 100), )));
 
         JavaRDD<String> airportsCSV = sc.textFile("L_AIRPORT_ID.csv");
         JavaPairRDD<Integer, String> airportsData = airportsCSV.mapToPair(s -> {
