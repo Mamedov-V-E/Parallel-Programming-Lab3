@@ -1,7 +1,7 @@
 package ParallelProgrammingLab3;
 
 class ParseUtils {
-    static final Integer FLIGHTS_LOG_AIRPORT_ID_PARAM_NUMBER = 14;
+    static final Integer FLIGHTS_LOG_AIRPORT_ID_PARAM_NUMBER = 13;
     static final Integer FLIGHTS_LOG_DELAY_PARAM_NUMBER = 17;
     static final Integer AIRPORTS_LIST_AIRPORT_ID_PARAM_NUMBER = 0;
     static final Integer AIRPORTS_LIST_AIRPORT_DESCRIPTION_PARAM_NUMBER = 1;
