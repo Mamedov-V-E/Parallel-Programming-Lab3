@@ -8,6 +8,6 @@ public class SparkApp {
 
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
-        
+        JavaRDD
     }
 }
