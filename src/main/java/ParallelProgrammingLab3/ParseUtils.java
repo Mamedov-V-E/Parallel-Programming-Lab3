@@ -1,4 +1,4 @@
-package ParallelProgrammingLab2;
+package ParallelProgrammingLab3;
 
 class ParseUtils {
     static final Integer FLIGHTS_LOG_AIRPORT_ID_PARAM_NUMBER = 14;
