@@ -21,7 +21,9 @@ public class SparkApp {
                     String originalAirportID = parameters[ParseUtils.FLIGHTS_ORIGIN_AIRPORT_ID_PARAM_NUMBER];
                     String destinationAirportID = parameters[ParseUtils.FLIGHTS_DEST_AIRPORT_ID_PARAM_NUMBER];
                     String delayString = parameters[ParseUtils.FLIGHTS_DELAY_PARAM_NUMBER];
-                    Long delay = (delayString.isEmpty()) ? 0 : Long.parseLong(delayString);
+
+                    Boolean isLate = delayString.isEmpty();
+                    Long delay = (isLate) ? 0 : Long.parseLong(delayString);
                     return new Tuple2<>(new Tuple2<>(Integer.parseInt(originalAirportID),
                             Integer.parseInt(destinationAirportID)), delay);
                 }).reduce()
