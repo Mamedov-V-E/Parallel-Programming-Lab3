@@ -29,7 +29,7 @@ public class SparkApp {
                     Double delay = (isLate) ? 0 : Double.parseDouble(delayString);
                     return new Tuple2<>(new Tuple2<>(Integer.parseInt(originalAirportID),
                             Integer.parseInt(destinationAirportID)),
-                            new Tuple3<>(delay, (isLate || delay != 0) ? 1 : 0, 1));
+                            new Tuple3<>(delay, (isLate || (delay != 0)) ? 1 : 0, 1));
                 })
                 .reduceByKey((a, b) -> new Tuple3<>(Math.max(a._1(), b._1()),
                         a._2() + b._2(),
