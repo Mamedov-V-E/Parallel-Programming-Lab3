@@ -17,7 +17,7 @@ public class SparkApp {
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String> flightsCSV = sc.textFile("664600583_T_ONTIME_sample.csv");
         String flightsHeader = flightsCSV.first();
-        JavaPairRDD<Tuple2<Integer, Integer>, Tuple2<Long, Double>> flightsData = flightsCSV
+        JavaPairRDD<Tuple2<Integer, Integer>, Tuple2<Double, Double>> flightsData = flightsCSV
                 .filter(s -> !s.equals(flightsHeader))
                 .mapToPair(s -> {
                     String[] parameters = ParseUtils.ParseFlightsLogLine(s);
@@ -26,7 +26,7 @@ public class SparkApp {
                     String delayString = parameters[ParseUtils.FLIGHTS_DELAY_PARAM_NUMBER];
 
                     Boolean isLate = delayString.isEmpty();
-                    Long delay = (isLate) ? 0 : Long.parseLong(delayString);
+                    Double delay = (isLate) ? 0 : Double.parseDouble(delayString);
                     return new Tuple2<>(new Tuple2<>(Integer.parseInt(originalAirportID),
                             Integer.parseInt(destinationAirportID)),
                             new Tuple3<>(delay, (isLate || delay != 0) ? 1 : 0, 1));
@@ -48,7 +48,7 @@ public class SparkApp {
         Map<Integer, String> stringAirportDataMap = airportsData.collectAsMap();
         final Broadcast<Map<Integer, String>> airportsBroadcasted = sc.broadcast(stringAirportDataMap);
 
-        JavaPairRDD<Tuple2<Tuple2<Integer, String>, Tuple2<Integer, String>>, Tuple2<Long, Double>> result =
+        JavaPairRDD<Tuple2<Tuple2<Integer, String>, Tuple2<Integer, String>>, Tuple2<Double, Double>> result =
                 flightsData.mapToPair(s -> new Tuple2<>(new Tuple2<>(
                         new Tuple2<>(s._1()._1(), airportsBroadcasted.value().get(s._1()._1())),
                         new Tuple2<>(s._1()._2(), airportsBroadcasted.value().get(s._1()._2()))),
