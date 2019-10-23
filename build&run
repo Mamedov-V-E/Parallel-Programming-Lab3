@@ -2,8 +2,8 @@
 mvn package
 hadoop fs -copyFromLocal src/main/resources/664600583_T_ONTIME_sample.csv
 hadoop fs -copyFromLocal src/main/resources/L_AIRPORT_ID.csv 
-export HADOOP_CLASSPATH=target/hadoop-examples-1.0-SNAPSHOT.jar 
-hadoop ParallelProgrammingLab2.ReduceSideJoin 664600583_T_ONTIME_sample.csv L_AIRPORT_ID.csv output
+export HADOOP_CLASSPATH=target/spark-lab3-1.0-SNAPSHOT.jar 
+hadoop ParallelProgrammingLab3.SparkApp 664600583_T_ONTIME_sample.csv L_AIRPORT_ID.csv output
 hadoop fs -copyToLocal output
 
 
