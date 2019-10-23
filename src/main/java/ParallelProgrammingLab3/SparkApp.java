@@ -35,6 +35,7 @@ public class SparkApp {
                         new Tuple2<>(s._2()._1(), new Double((double)s._2()._2() / s._2()._3() * 100))));
 
         JavaRDD<String> airportsCSV = sc.textFile("L_AIRPORT_ID.csv");
+        
         JavaPairRDD<Integer, String> airportsData = airportsCSV.mapToPair(s -> {
             String[] parameters = ParseUtils.ParseAirportsListLine(s);
             return new Tuple2<>(Integer.parseInt(parameters[ParseUtils.AIRPORTS_AIRPORT_ID_PARAM_NUMBER]),
