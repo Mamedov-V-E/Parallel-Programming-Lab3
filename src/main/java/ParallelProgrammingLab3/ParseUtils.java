@@ -4,7 +4,10 @@ class ParseUtils {
     static final Integer FLIGHTS_ORIGIN_AIRPORT_ID_PARAM_NUMBER = 11;
     static final Integer FLIGHTS_DEST_AIRPORT_ID_PARAM_NUMBER = 14;
     static final Integer FLIGHTS_DELAY_PARAM_NUMBER = 17;
-    static final String FLIGHTS_HEADER_LINE = "";
+    static final String FLIGHTS_HEADER_LINE = "\"YEAR\",\"QUARTER\",\"MONTH\",\"DAY_OF_MONTH\",\"DAY_OF_WEEK\"," +
+            "\"FL_DATE\",\"UNIQUE_CARRIER\",\"AIRLINE_ID\",\"CARRIER\",\"TAIL_NUM\",\"FL_NUM\",\"ORIGIN_AIRPORT_ID\"," +
+            "\"ORIGIN_AIRPORT_SEQ_ID\",\"ORIGIN_CITY_MARKET_ID\",\"DEST_AIRPORT_ID\",\"WHEELS_ON\",\"ARR_TIME\"," +
+            "\"ARR_DELAY\",\"ARR_DELAY_NEW\",\"CANCELLED\",\"CANCELLATION_CODE\",\"AIR_TIME\",\"DISTANCE\",";
     static final Integer AIRPORTS_AIRPORT_ID_PARAM_NUMBER = 0;
     static final Integer AIRPORTS_AIRPORT_DESCRIPTION_PARAM_NUMBER = 1;
     static final String AIRPORTS_HEADER_LINE = "Code,Description";
