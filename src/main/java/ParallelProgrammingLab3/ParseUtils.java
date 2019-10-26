@@ -7,6 +7,7 @@ class ParseUtils {
     static final String FLIGHTS_HEADER_LINE = "";
     static final Integer AIRPORTS_AIRPORT_ID_PARAM_NUMBER = 0;
     static final Integer AIRPORTS_AIRPORT_DESCRIPTION_PARAM_NUMBER = 1;
+    static final String AIRPORTS_HEADER_LINE
     private static final String FLIGHTS_DELIMITER = ",";
     private static final String AIRPORTS_DELIMITER = "\",\"";
     private static final String QUOTES_SYMBOL = "\"";
