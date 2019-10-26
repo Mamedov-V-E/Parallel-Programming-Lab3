@@ -12,9 +12,9 @@ import java.util.Map;
 
 public class SparkApp {
     public static void main(String[] args) {
-
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sc = new JavaSparkContext(conf);
+
         JavaRDD<String> flightsCSV = sc.textFile("664600583_T_ONTIME_sample.csv");
         JavaPairRDD<Tuple2<Integer, Integer>, Tuple2<Double, Double>> flightsData = flightsCSV
                 .filter(s -> !s.equals(ParseUtils.FLIGHTS_HEADER_LINE))
