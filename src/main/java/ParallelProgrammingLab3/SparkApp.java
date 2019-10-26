@@ -31,9 +31,7 @@ public class SparkApp {
         String airportsHeader = airportsCSV.first();
         JavaPairRDD<Integer, String> airportsData = airportsCSV.filter(s -> !s.equals(airportsHeader))
                 .mapToPair(s -> {
-            String[] parameters = ParseUtils.ParseAirportsListLine(s);
-            return new Tuple2<>(Integer.parseInt(parameters[ParseUtils.AIRPORTS_AIRPORT_ID_PARAM_NUMBER]),
-                    parameters[ParseUtils.AIRPORTS_AIRPORT_DESCRIPTION_PARAM_NUMBER]);
+            
         });
         Map<Integer, String> stringAirportDataMap = airportsData.collectAsMap();
         final Broadcast<Map<Integer, String>> airportsBroadcasted = sc.broadcast(stringAirportDataMap);
