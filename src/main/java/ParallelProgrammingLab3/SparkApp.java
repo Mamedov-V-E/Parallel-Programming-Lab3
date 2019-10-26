@@ -19,7 +19,7 @@ public class SparkApp {
         String flightsHeader = flightsCSV.first();
         JavaPairRDD<Tuple2<Integer, Integer>, Tuple2<Double, Double>> flightsData = flightsCSV
                 .filter(s -> !s.equals(flightsHeader))
-                .mapToPair(PairCreationUtils::CreateFlightsPair)
+                .mapToPair(TupleCreationUtils::CreateFlightsPair)
                 .reduceByKey((a, b) -> new Tuple3<>(Math.max(a._1(), b._1()),
                         a._2() + b._2(),
                         a._3() + b._3()))
@@ -29,7 +29,7 @@ public class SparkApp {
         JavaRDD<String> airportsCSV = sc.textFile("L_AIRPORT_ID.csv");
         String airportsHeader = airportsCSV.first();
         JavaPairRDD<Integer, String> airportsData = airportsCSV.filter(s -> !s.equals(airportsHeader))
-                .mapToPair(PairCreationUtils::CreateAirportsPair);
+                .mapToPair(TupleCreationUtils::CreateAirportsPair);
         Map<Integer, String> stringAirportDataMap = airportsData.collectAsMap();
         final Broadcast<Map<Integer, String>> airportsBroadcasted = sc.broadcast(stringAirportDataMap);
 

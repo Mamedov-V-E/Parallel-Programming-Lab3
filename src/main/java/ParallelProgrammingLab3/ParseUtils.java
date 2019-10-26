@@ -4,6 +4,7 @@ class ParseUtils {
     static final Integer FLIGHTS_ORIGIN_AIRPORT_ID_PARAM_NUMBER = 11;
     static final Integer FLIGHTS_DEST_AIRPORT_ID_PARAM_NUMBER = 14;
     static final Integer FLIGHTS_DELAY_PARAM_NUMBER = 17;
+    static final String FLIGHTS_HEADER_LINE = "";
     static final Integer AIRPORTS_AIRPORT_ID_PARAM_NUMBER = 0;
     static final Integer AIRPORTS_AIRPORT_DESCRIPTION_PARAM_NUMBER = 1;
     private static final String FLIGHTS_DELIMITER = ",";

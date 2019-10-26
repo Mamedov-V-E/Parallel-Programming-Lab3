@@ -3,8 +3,7 @@ package ParallelProgrammingLab3;
 import scala.Tuple2;
 import scala.Tuple3;
 
-public class PairCreationUtils {
-
+public class TupleCreationUtils {
     public static Tuple2<Tuple2<Integer, Integer>, Tuple3<Double, Integer, Integer>>
     CreateFlightsPair(String line) {
         String[] parameters = ParseUtils.ParseFlightsLogLine(line);
