@@ -20,6 +20,8 @@ public class PairCreationUtils {
     }
 
     public static Tuple2<Integer, String> CreateAirportsPair(String line) {
-
+        String[] parameters = ParseUtils.ParseAirportsListLine(line);
+        return new Tuple2<>(Integer.parseInt(parameters[ParseUtils.AIRPORTS_AIRPORT_ID_PARAM_NUMBER]),
+                parameters[ParseUtils.AIRPORTS_AIRPORT_DESCRIPTION_PARAM_NUMBER]);
     }
 }

@@ -4,7 +4,6 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.broadcast.Broadcast;
 import scala.Tuple2;
 import scala.Tuple3;
@@ -30,9 +29,7 @@ public class SparkApp {
         JavaRDD<String> airportsCSV = sc.textFile("L_AIRPORT_ID.csv");
         String airportsHeader = airportsCSV.first();
         JavaPairRDD<Integer, String> airportsData = airportsCSV.filter(s -> !s.equals(airportsHeader))
-                .mapToPair(s -> {
-            
-        });
+                .mapToPair(PairCreationUtils::CreateAirportsPair);
         Map<Integer, String> stringAirportDataMap = airportsData.collectAsMap();
         final Broadcast<Map<Integer, String>> airportsBroadcasted = sc.broadcast(stringAirportDataMap);
 
@@ -44,19 +41,4 @@ public class SparkApp {
 
         result.saveAsTextFile("result");
     }
-
-//    private static Tuple2<Tuple2<Integer, Integer>, Long> GetNewFlightKeyValuePair (String line) {
-//        String[] parameters = ParseUtils.ParseFlightsLogLine(line);
-//        String originalAirportID = parameters[ParseUtils.FLIGHTS_LOG_ORIGIN_AIRPORT_ID_PARAM_NUMBER];
-//        String destinationAirportID = parameters[ParseUtils.FLIGHTS_LOG_DEST_AIRPORT_ID_PARAM_NUMBER];
-//        String delayString = parameters[ParseUtils.FLIGHTS_LOG_DELAY_PARAM_NUMBER];
-//        Long delay = (delayString.isEmpty()) ? 0 : Long.parseLong(delayString);
-//        return new Tuple2<>(new Tuple2<>(Integer.parseInt(originalAirportID), Integer.parseInt(destinationAirportID)), delay);
-//    }
-//
-//    private static Tuple2<Integer, String> GetNewAirportsKeyValuePair (String line) {
-//        String[] parameters = ParseUtils.ParseAirportsListLine(line);
-//        return new Tuple2<>(Integer.parseInt(parameters[ParseUtils.AIRPORTS_LIST_AIRPORT_ID_PARAM_NUMBER]),
-//                parameters[ParseUtils.AIRPORTS_LIST_AIRPORT_DESCRIPTION_PARAM_NUMBER]);
-//    }
 }
