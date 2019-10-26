@@ -4,6 +4,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.broadcast.Broadcast;
 import scala.Tuple2;
 import scala.Tuple3;
@@ -19,18 +20,7 @@ public class SparkApp {
         String flightsHeader = flightsCSV.first();
         JavaPairRDD<Tuple2<Integer, Integer>, Tuple2<Double, Double>> flightsData = flightsCSV
                 .filter(s -> !s.equals(flightsHeader))
-                .mapToPair(s -> {
-                    String[] parameters = ParseUtils.ParseFlightsLogLine(s);
-                    String originalAirportID = parameters[ParseUtils.FLIGHTS_ORIGIN_AIRPORT_ID_PARAM_NUMBER];
-                    String destinationAirportID = parameters[ParseUtils.FLIGHTS_DEST_AIRPORT_ID_PARAM_NUMBER];
-                    String delayString = parameters[ParseUtils.FLIGHTS_DELAY_PARAM_NUMBER];
-
-                    boolean isLate = delayString.isEmpty();
-                    Double delay = (isLate) ? 0 : Double.parseDouble(delayString);
-                    return new Tuple2<>(new Tuple2<>(Integer.parseInt(originalAirportID),
-                            Integer.parseInt(destinationAirportID)),
-                            new Tuple3<>(delay, (isLate || (delay > 0)) ? 1 : 0, 1));
-                })
+                .mapToPair(PairCreationUtils::CreateFlightsPair)
                 .reduceByKey((a, b) -> new Tuple3<>(Math.max(a._1(), b._1()),
                         a._2() + b._2(),
                         a._3() + b._3()))
